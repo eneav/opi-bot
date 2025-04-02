@@ -119,9 +119,6 @@ if not results or results[0][1] < 0.5:
 
 Durch Erhöhung oder Senkung dieser Grenze bzw. dieses Wertes lässt sich das Antwortverhalten feinjustieren:
 
-- **Höherer Schwellenwert (z. B. 0.7)** bedeutet: präzisere Antworten, aber mehr „keine Ergebnisse“-Meldungen
-- **Niedrigerer Schwellenwert (z. B. 0.3)** bedeutet: großzügigere Antwortfindung, aber potenziell unpassendere/fehlerhafte Ergebnisse
-
 ---
 
 ### Visualisierung der Auswirkungen
