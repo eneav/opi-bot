@@ -39,12 +39,12 @@ python create_database.py
 
 Nach Ausführung solltest du im Verzeichnis `faiss_index/` mehrere `.faiss`-Dateien sehen.  
 
-![Anwendung](image2.png)
+![Anwendung](/img/image2.png)
 
 **Hinweis:** Wenn der Ordner leer bleibt wurde die Datenbank nicht korrekt erstellt. Stelle sicher, dass:
 - Die CSV-Datei vorhanden und korrekt formatiert ist
 
-![Anwendung](image3.png)
+![Anwendung](/img/image3.png)
 
 - Die `.env`-Datei gültige API-Zugänge enthält
 
@@ -66,7 +66,7 @@ Um eigene Inhalte zu verwenden, erstelle im `data/`-Ordner eine Datei (z. B. `
 
 Die Spaltenüberschriften **Fragen** und **Antworten** sind verpflichtend.
 
-![Anwendung](image3.png)
+![Anwendung](/img/image3.png)
 
 ## Projektstruktur
 
@@ -94,3 +94,61 @@ Antwort: Bitte melden Sie sich vor Arbeitsbeginn telefonisch bei Ihrer Führungs
 ```
 
 ![Anwendung](image.png)
+
+
+---
+
+## Anpassung des Confidence Scores
+
+Um die Relevanz einer Antwort zu bewerten, wird ein sogenannter Confidence Score verwendet. Dieser Wert liegt zwischen `0` und `1` und gibt an, wie sicher das System ist, dass der zurückgegebene Kontext zur gestellten Frage passt.
+
+### Code-Snippet zur Anpassung
+
+In der Datei `query_data.py` (bzw. wo die `run_query()`-Funktion also liegt), kann der Confidence Score angepasst werden. Die Standardgrenze für die ich mich entschieden habe liegt bei `0.5`. Treffer darunter werden als irrelevant gewertet:
+
+```python
+if not results or results[0][1] < 0.5:
+    return "KEINE PASSENDEN ERGEBNISSE GEFUNDEN. Bitte versuche es mit einer anderen Frage."
+```
+
+Durch Erhöhung oder Senkung dieser Grenze bzw. dieses Wertes lässt sich das Antwortverhalten feinjustieren:
+
+- **Höherer Schwellenwert (z. B. 0.7)** bedeutet: präzisere Antworten, aber mehr „keine Ergebnisse“-Meldungen
+- **Niedrigerer Schwellenwert (z. B. 0.3)** bedeutet: großzügigere Antwortfindung, aber potenziell unpassendere/fehlerhafte Ergebnisse
+
+---
+
+### Visualisierung der Auswirkungen
+
+Die folgenden Diagramme zeigen, wie sich unterschiedliche Scores auf die Erkennung von passenden Antworten auswirken:
+
+#### Nicht passende Antworten (Incorrect Responses)
+Antworten mit Score < 0.5, obwohl sie keine wirkliche Verbindung zur Frage haben:
+
+```python
+if not results or results[0][1] < 0.29:
+```
+
+![Incorrect Responses](img/incorrect.png)
+
+#### Random Related Responses 
+Lose verknüpfte, aber semantisch schwache Treffer mit mittlerem Score (0.3–0.6):
+
+```python
+if not results or results[0][1] < 0.54:
+```
+
+![Random Related Responses](img/random.png)
+
+#### Passende Antworten (Correct Responses)
+Hohe Scores (ab 0.7) – hier besteht starke Übereinstimmung zwischen Frage und gefundenem Kontext:
+
+```python
+if not results or results[0][1] < 0.86:
+```
+
+![Correct Responses](img/correct.png)
+
+---
+
+Je nach Use Case (präzision oder kulanz) ist dieser Wert frei anpassbar!
