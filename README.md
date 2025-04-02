@@ -4,9 +4,13 @@ Dieses Projekt stellt eine interne Frage-Antwort-Anwendung bereit, die auf dem R
 
 Hinweis: FAISS wurde statt ChromaDB gewählt, da es lokal effizienter läuft, weniger Ressourcen verbraucht und sich gut für schlanke, lokale Demos eignet.
 
+
+
 ## Funktionsweise
 
 Das System durchsucht auf Basis eines Embedding-Vergleichs (Vektorsuche) die relevantesten Einträge in der Datenbank und stellt dem OpenAI-Modell (z. B. GPT-3.5) diese als Kontext zur Verfügung. Nur basierend auf diesem Kontext wird eine Antwort erzeugt.
+
+
 
 ## Einrichtung
 
@@ -30,6 +34,8 @@ GPT_MODEL=gpt-3.5-turbo
 
 GPT-3.5 ist ideal für kompakte Antworten in FAQ-Formaten, weil es zuverlässig, schnell und günstig arbeitet.
 
+
+
 ## Nutzung
 
 ### 1. Datenbank aus CSV erzeugen
@@ -48,14 +54,15 @@ Nach Ausführung solltest du im Verzeichnis `faiss_index/` mehrere `.faiss`-Date
 
 - Die `.env`-Datei gültige API-Zugänge enthält
 
-### 2. Anwendung starten (mit Web-Oberfläche)
+
+### 2. Anwendung starten (mit Web-Oberfläche | STREAMLIT)
 ```bash
 streamlit run streamlit_app.py
 ```
 
 Dies öffnet eine interaktive FAQ-Oberfläche im Browser, über die du direkt Fragen stellen kannst.
 
-## Eigene CSV-Datei verwenden
+## Eigene CSV-Datei(en) verwenden
 
 Um eigene Inhalte zu verwenden, erstelle im `data/`-Ordner eine Datei (z. B. `faq.csv`) mit folgendem Aufbau:
 
@@ -81,7 +88,7 @@ Die Spaltenüberschriften Fragen und Antworten sind verpflichtend.
 ## Voraussetzungen
 
 - Python 3.10 (oder höher)
-- Gültiger OpenAI API Key (https://platform.openai.com/account/api-keys)
+- Gültiger OpenAI API Key 
 - Optional: Streamlit (für GUI)
 
 ## Beispielausgabe
@@ -92,7 +99,7 @@ Frage: Wie melde ich mich krank?
 Antwort: Bitte melden Sie sich vor Arbeitsbeginn telefonisch bei Ihrer Führungskraft.
 ```
 
-![Anwendung](image.png)
+![Anwendung](img/image.png)
 
 
 ---
