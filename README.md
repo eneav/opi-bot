@@ -61,22 +61,21 @@ Um eigene Inhalte zu verwenden, erstelle im `data/`-Ordner eine Datei (z. B. `
 
 | Fragen                  | Antworten                                                                 |
 |-------------------------|---------------------------------------------------------------------------|
-| Wie melde ich mich krank? | Bitte melden Sie sich vor Arbeitsbeginn telefonisch bei Ihrer Führungskraft. |
 | Was tun bei IT-Problemen? | Kontaktieren Sie bitte den IT-Support unter support@firma.de.               |
 
-Die Spaltenüberschriften **Fragen** und **Antworten** sind verpflichtend.
+Die Spaltenüberschriften Fragen und Antworten sind verpflichtend.
 
-![Anwendung](/img/image3.png)
+![Anwendung](img/image3.png)
 
 ## Projektstruktur
 
 | Datei / Ordner     | Beschreibung |
 |--------------------|--------------|
-| `create_database.py` | Erstellt die FAISS-Datenbank |
-| `query_data.py`     | Durchsucht die Datenbank und generiert eine Antwort |
-| `streamlit_app.py`  | auf Streamlit-basierende Benutzeroberfläche |
-| `data/`             | enthält die CSV-Datenquelle, bei formatabweichung diese Logik dem programm anpassen |
-| `faiss_index/`      | Persistente Vektordatenbank (wird automatisch erstellt) |
+| `create_database.py` | Erstellt die Datenbank (FAISS)auf basis der daten von data/|
+| `query_data.py`     | Durchsucht die Datenbank  und generiert eine Antwort |
+| `streamlit_app.py`  | Streamlit-basierende GUI |
+| `data/`             | enthält die CSV-Datenquelle, bei formatabweichung diese Logik dem programm anpassen! |
+| `faiss_index/`      | persistente Vektordatenbank (wird automatisch erstellt mit create_database.py) |
 | `.env.example`      | Vorlage für Umgebungsvariablen |
 
 ## Voraussetzungen

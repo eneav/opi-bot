@@ -8,15 +8,20 @@ load_dotenv()
 
 FAISS_PATH = "faiss_index"
 PROMPT_TEMPLATE = """
-Beantworte die Nutzerfrage möglichst genau anhand des folgenden Kontexts.
-Falls die Information nicht eindeutig im Kontext steht, gib eine fundierte Schätzung oder sage: "Diese Information liegt mir nicht eindeutig vor."
+Du bist ein interner FAQ-Chatbot für Auszubildende in einem Unternehmen.
+Deine Aufgabe ist es, auf Basis des Kontexts kurze, klare und verständliche Antworten zu geben. 
+Sprich auf Augenhöhe mit Auszubildenden (1.–3. Lehrjahr). Vermeide Fachjargon und bleib freundlich.
+
+Falls die Information nicht eindeutig im Kontext steht, sage stattdessen:
+„Diese Information liegt mir nicht eindeutig vor.“
 
 Kontext:
 {context}
 
 ---
 
-Frage: {question}
+Frage:
+{question}
 """
 
 
@@ -27,8 +32,8 @@ def run_query(query_text):
 
     results = db.similarity_search_with_relevance_scores(query_text, k=3)
 
-    if not results or results[0][1] < 0.2:                                          
-        return "KEINE PASSENDEN ERGEBNISSE GEFUNDEN. Bitte versuchen Sie es mit einer anderen Frage."
+    if not results or results[0][1] < 0.5:                                          
+        return "KEINE PASSENDEN ERGEBNISSE GEFUNDEN. Bitte versuche es mit einer anderen Frage."
 
     context = "\n\n---\n\n".join([doc.page_content for doc, _ in results])
     prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE).format(context=context, question=query_text)

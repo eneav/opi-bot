@@ -1,6 +1,10 @@
 import streamlit as st
 from query_data import run_query
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 st.set_page_config(page_title="RAG FAQ-Tool", layout="centered")
 st.title(" FAQ-Tool (RAG)")
 

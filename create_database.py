@@ -11,19 +11,42 @@ load_dotenv()
 print("API-Key:", os.getenv("OPENAI_API_KEY"))
 
 
-DATA_PATH = "data/sourcedata01_fixed.csv"
+DATA_PATHS = [                          
+    "data/sourcedata01_fixed.csv",
+    "data/sourcedata01_questions_formulated.csv"
+]
+
+#DATA_PATH = "data/sourcedata01_fixed.csv"
 
 def generate_data_store():
     documents = load_documents()
     chunks = split_text(documents)
     save_to_faiss(chunks)
 
-def load_documents():
+def load_documents():                                                                                 #function wurde angepasst damit sie mehr als nur eine csv datei laden kann
+    all_rows = []                                                                                     #data path=paths mit for schelife fäntg sie alle datein im data/ ab 
+
+    for path in DATA_PATHS:                                                                           #lädt alle csv datein im data/ ab | FÜR SKALIIERUNG EINGEBAUT 
+        df = pd.read_csv(path)
+        if "Fragen" not in df.columns or "Antworten" not in df.columns:
+            raise ValueError(f"CSV '{path}' muss Spalten 'Fragen' und 'Antworten' enthalten")
+
+        rows = [Document(page_content=row["Antworten"], metadata={"Frage": row["Fragen"]})
+                for _, row in df.iterrows()]
+        all_rows.extend(rows)
+
+    return all_rows
+
+
+
+#def load_documents():                                                                                      #function wurde angepasst damit sie mehr als nur eine csv datei laden kann
+                                                                                                            #ursprünglich für NUR EINE csv date , bei rückker zeile 19 reaktivieren    
     df = pd.read_csv(DATA_PATH)
     if "Fragen" not in df.columns or "Antworten" not in df.columns:
         raise ValueError("CSV muss Spalten 'Fragen' und 'Antworten' enthalten")
 
     return [Document(page_content=row["Antworten"], metadata={"Frage": row["Fragen"]}) for _, row in df.iterrows()]
+
 
 def split_text(documents):
     splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=100)
