@@ -1,0 +1,11 @@
+1. venv Umgebung anlegen und aktivieren:
+   python -m venv .venv
+   .venv\Scripts\activate
+
+2. requirements installieren:
+   pip install -r requirements.txt
+
+3. .env Datei anlegen und API-Key eintragen
+
+4. anwendung starten:
+   streamlit run main.py
