@@ -43,11 +43,11 @@ GPT-3.5 ist ideal für kompakte Antworten in FAQ-Formaten, weil es zuverlässig,
 python create_database.py
 ```
 
-Nach Ausführung solltest du im Verzeichnis `faiss_index/` mehrere `.faiss`-Dateien sehen.  
+Nach Ausführung solltest du im Verzeichnis `faiss_index/` insgesamt 2 `.faiss`-Dateien sehen.  
 
 ![Anwendung](/img/image2.png)
 
-**Hinweis:** Wenn der Ordner leer bleibt wurde die Datenbank nicht korrekt erstellt. Stelle sicher, dass:
+Wenn der Ordner leer bleibt wurde die Datenbank nicht korrekt erstellt. Stelle sicher, dass:
 - Die CSV-Datei vorhanden und korrekt formatiert ist
 
 ![Anwendung](/img/image3.png)
@@ -62,17 +62,6 @@ streamlit run streamlit_app.py
 
 Dies öffnet eine interaktive FAQ-Oberfläche im Browser, über die du direkt Fragen stellen kannst.
 
-## Eigene CSV-Datei(en) verwenden
-
-Um eigene Inhalte zu verwenden, erstelle im `data/`-Ordner eine Datei (z. B. `faq.csv`) mit folgendem Aufbau:
-
-| Fragen                  | Antworten                                                                 |
-|-------------------------|---------------------------------------------------------------------------|
-| Was tun bei IT-Problemen? | Kontaktieren Sie bitte den IT-Support unter support@firma.de.               |
-
-Die Spaltenüberschriften Fragen und Antworten sind verpflichtend.
-
-![Anwendung](img/image3.png)
 
 ## Projektstruktur
 
