@@ -4,7 +4,9 @@ Dieses Projekt stellt eine interne Frage-Antwort-Anwendung bereit, die auf dem R
 
 Die Antwortgenerierung erfolgt mithilfe der openai api (gpt-4-0125-preview).
 
-Info: Aufgrund von Einschränkungen in unserer Unternehmensumgebung (z. B. VPN) wurde FAISS statt ChromaDB eingesetzt – FAISS ist lokal effizient und ideal für kompakte Demos.
+Info: Aufgrund von Einschränkungen in unserer Unternehmensumgebung (z. B. VPN) wurde FAISS statt ChromaDB eingesetzt. 
+
+FAISS ist lokal effizient und ideal für diese Demos.
 
 
 ## Funktionsweise
@@ -12,6 +14,7 @@ Info: Aufgrund von Einschränkungen in unserer Unternehmensumgebung (z. B. VPN
 Das System durchsucht auf Basis eines Embedding-Vergleichs (Vektorsuche) die relevantesten Einträge in der Datenbank und stellt dem OpenAI-Modell (z. B. GPT-3.5) diese als Kontext zur Verfügung. Nur basierend auf diesem Kontext wird eine Antwort erzeugt.
 
 
+Der [Faiss Index](https://faiss.ai/index.html) ist eine vektorbasierte Datenbank. Dabei werden alle Texte in Vektoren umgewandelt, um bei Anfragen die inhaltlich ähnlichsten Dokumente effizient zu finden. 
 
 ## Einrichtung
 
