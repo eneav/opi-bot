@@ -15,6 +15,7 @@ Sprich auf Augenhöhe mit Auszubildenden (1.-3. Lehrjahr). Vermeide Fachjargon u
 Falls die Information nicht eindeutig im Kontext steht, sage stattdessen:
 „Diese Information liegt mir nicht eindeutig vor, frage bitte dein/e Ausbildungsleiter/in“ 
 
+
 Kontext:
 {context}
 
@@ -23,6 +24,7 @@ Kontext:
 Frage:
 {question}
 """
+#Falls mehrere Optionen möglich sind, gib maximal zwei Alternativen an.                         | prompt zu template hinzufügen, falls output zu lang 
 
 
 def run_query(query_text):
@@ -32,7 +34,11 @@ def run_query(query_text):
 
     results = db.similarity_search_with_relevance_scores(query_text, k=3)
 
-    if not results or results[0][1] < 0.5:                                          
+    if not results or results[0][1] < 0.3:                                                                      #0.3 gibt mehr antworten zurück, 0.5 weniger
+                                                                                                         #problem: gibt auf niedrige konfidenze lose antworten, also hallizuniert in dem sinne 
+                                                                                                         # 0.3für testzwecke 
+                                                                                                         # 0.7 nach vollständiger fragen katalog von isab. , dann greift auch 
+                                                                                                         # höherer score alle fragen ab     
         return "KEINE PASSENDEN ERGEBNISSE GEFUNDEN. Bitte versuche es mit einer anderen Frage."
 
     context = "\n\n---\n\n".join([doc.page_content for doc, _ in results])
@@ -40,9 +46,9 @@ def run_query(query_text):
 
 
 
-    selected_model = os.getenv("GPT_MODEL", "gpt-3.5-turbo")
+    selected_model = os.getenv("GPT_MODEL", "gpt-3.5-turbo")                    #wenn in der env kein modell hinterlegt ist, wird auf 3.5 turbo zurückgegriffen (automatisch)
 
-    
+
     model = ChatOpenAI(model=selected_model, temperature=0)
 
 
