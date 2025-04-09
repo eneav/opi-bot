@@ -1,11 +1,35 @@
+setup: 
+
 1. venv Umgebung anlegen und aktivieren:
+
    python -m venv .venv
    .venv\Scripts\activate
 
 2. requirements installieren:
+
    pip install -r requirements.txt
 
-3. .env Datei anlegen und API-Key eintragen
+3. .env Datei anlegen und API-Key & model eingeben 
 
 4. anwendung starten:
+
    streamlit run streamlit_app.py 
+
+
+ ------------------------
+anwendung: 
+
+
+ 1.   create_database.py MUSS beim ersten start einmalig ausgeführt werden 
+
+ 2. query data wird von der streamlit app automatisch importiert, also keine eigenstädnige ausführung nötig 
+          - es beinhaltet den prompt template und den gpt aufruf
+          -also bei bedarf von skalierung hier werte ändern 
+          - der gpt model in dem query data ist nur fallback sicherung, falls model in .env nicht greift 
+
+
+3. nach create database die app ausführen mit streamlit run streamlit_app.py 
+      - hier holt sich die app alles aus der querey data file
+      - es nutzt das faiss indexx (also: das MUSST du vorher mit create_database erstellt haben)
+
+           
