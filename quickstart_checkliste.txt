@@ -8,4 +8,4 @@
 3. .env Datei anlegen und API-Key eintragen
 
 4. anwendung starten:
-   streamlit run main.py
+   streamlit run streamlit_app.py 
