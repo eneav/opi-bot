@@ -57,11 +57,11 @@ from langchain_community.vectorstores import FAISS
 def save_to_faiss(chunks):
     db = FAISS.from_documents(chunks, OpenAIEmbeddings())
     db.save_local("faiss_index")
-    print(f"ERFOLGREICH {len(chunks)} Chunks in FAISS gespeichert.")
+    print(f"ERFOLGREICH {len(chunks)} Chunks in FAISS datenbank gespeichert.")
 
 
 
 if __name__ == "__main__":
     generate_data_store()
-    print("Datenbank erfolgreich erstellt.")
+    print("Datenbank erfolgreich erstellt!")
 
