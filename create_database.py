@@ -11,17 +11,36 @@ load_dotenv()
 print("API-Key:", os.getenv("OPENAI_API_KEY"))
 
 
-DATA_PATHS = [                          
-    "data/sourcedata01_fixed.csv",
-    "data/sourcedata01_questions_formulated.csv"
-]
+DATA_PATHS = {
+    "azubi": "data/azubis.json",
+    "student": "data/studenten.json"
+}
+
+
 
 #DATA_PATH = "data/sourcedata01_fixed.csv"
 
 def generate_data_store():
-    documents = load_documents()
-    chunks = split_text(documents)
-    save_to_faiss(chunks)
+    for group, path in DATA_PATHS.items():
+        # JSON laden und untergeordnete qa_pairs extrahieren
+        raw_json = pd.read_json(path)
+        qa_pairs = pd.json_normalize(raw_json["qa_pairs"])
+
+        # Rename-Spalten, um den späteren Code nicht ändern zu müssen
+        qa_pairs = qa_pairs.rename(columns={"question": "Fragen", "answer": "Antworten"})
+
+        # Prüfung auf Spalten
+        if "Fragen" not in qa_pairs.columns or "Antworten" not in qa_pairs.columns:
+            raise ValueError(f"JSON '{path}' muss Spalten 'Fragen' und 'Antworten' enthalten")
+
+        rows = [
+            Document(page_content=row["Antworten"], metadata={"Frage": row["Fragen"]})
+            for _, row in qa_pairs.iterrows()
+        ]
+        chunks = split_text(rows)
+        save_to_faiss(chunks, group)
+
+
 
 def load_documents():                                                                                 #function wurde angepasst damit sie mehr als nur eine csv datei laden kann
     all_rows = []                                                                                     #data path=paths mit for schelife fäntg sie alle datein im data/ ab 
@@ -54,10 +73,12 @@ def split_text(documents):
 
 from langchain_community.vectorstores import FAISS
 
-def save_to_faiss(chunks):
+def save_to_faiss(chunks, group):
     db = FAISS.from_documents(chunks, OpenAIEmbeddings())
-    db.save_local("faiss_index")
-    print(f"ERFOLGREICH {len(chunks)} Chunks in FAISS datenbank gespeichert.")
+    save_path = f"faiss_index/{group}_index"
+    db.save_local(save_path)
+    print(f"ERFOLGREIC {len(chunks)} Chunks in '{save_path}' gespeichert")
+
 
 
 

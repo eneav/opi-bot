@@ -6,15 +6,37 @@ import os
 
 load_dotenv()
 
-FAISS_PATH = "faiss_index"
-PROMPT_TEMPLATE = """
+#GROUP = "azubi"
+
+
+#faiss_path = f"faiss_index/{group}_index"
+
+
+
+PROMPT_TEMPLATES = {
+    "azubi": """
 Du bist ein interner FAQ-Chatbot für Auszubildende in einem Unternehmen.
-Deine Aufgabe ist es, auf Basis des Kontexts kurze, klare und verständliche Antworten zu geben. 
-Sprich auf Augenhöhe mit Auszubildenden (1.-3. Lehrjahr). Vermeide Fachjargon und bleib freundlich. 
+Deine Aufgabe ist es, auf Basis des Kontexts kurze, klare und verständliche Antworten zu geben.
+Sprich auf Augenhöhe mit Auszubildenden (1.–3. Lehrjahr). Vermeide Fachjargon und bleib freundlich.
 
 Falls die Information nicht eindeutig im Kontext steht, sage stattdessen:
-„Diese Information liegt mir nicht eindeutig vor, frage bitte dein/e Ausbildungsleiter/in. Falls du nicht weißt, wer das ist, frag gerne hier im Chat nach.“ 
+„Diese Information liegt mir nicht eindeutig vor, frage bitte dein/e Ausbildungsleiter/in. Falls du nicht weißt, wer das ist, frag gerne hier im Chat nach.“
 
+Kontext:
+{context}
+
+---
+
+Frage:
+{question}
+""",
+
+    "student": """
+Du bist ein interner FAQ-Chatbot für dual Studierende im Unternehmen.
+Antworte präzise, verständlich und studiennah. Beziehe dich nur auf den Kontext.
+
+Falls etwas unklar ist, sag bitte:
+„Diese Information liegt mir nicht eindeutig vor. Bitte frag deine:n Ausbilder:in oder Studienbetreuer:in.“
 
 Kontext:
 {context}
@@ -24,13 +46,23 @@ Kontext:
 Frage:
 {question}
 """
+}
 #Falls mehrere Optionen möglich sind, gib maximal zwei Alternativen an.                         | prompt zu template hinzufügen, falls output zu lang 
 
+def run_query(query_text, group="azubi"):
 
-def run_query(query_text):
+#def run_query(query_text): # ohne gruppen abfrage |one dimensuionmal 
 
     embedding_function = OpenAIEmbeddings()
-    db = FAISS.load_local(FAISS_PATH, OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+
+    faiss_path = f"faiss_index/{group}_index"
+    db = FAISS.load_local(faiss_path, embedding_function, allow_dangerous_deserialization=True)
+
+         # more dimensional
+
+    #embedding_function = OpenAIEmbeddings()
+    #db = FAISS.load_local(FAISS_PATH, OpenAIEmbeddings(), allow_dangerous_deserialization=True)                    |one dimensional
+
 
     results = db.similarity_search_with_relevance_scores(query_text, k=3)
 
@@ -42,7 +74,12 @@ def run_query(query_text):
         return "KEINE PASSENDEN ERGEBNISSE GEFUNDEN. Bitte versuche es mit einer anderen Frage."
 
     context = "\n\n---\n\n".join([doc.page_content for doc, _ in results])
-    prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE).format(context=context, question=query_text)
+
+    prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATES[group])                 # more dimensional 
+    prompt = prompt_template.format(context=context, question=query_text)
+
+
+    #prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE).format(context=context, question=query_text)    | one dimesnional 
 
 
 
