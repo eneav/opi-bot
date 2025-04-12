@@ -5,3 +5,4 @@ faiss-cpu
 pandas
 python-dotenv
 streamlit
+langchain_openai
