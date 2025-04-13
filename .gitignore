@@ -10,7 +10,7 @@ __pycache__/
 faiss_index/
 
 
-data/*.csv
+data/
 
 
 .vscode/
