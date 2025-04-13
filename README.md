@@ -13,7 +13,7 @@ Das System durchsucht auf Basis eines Embedding-Vergleichs (Vektorsuche) die rel
 
 In der Oberfläche fragt das Tool nach einem Passwort, das die Gruppe identifiziert ("azubi123" = Azubis, "student456" = Studierende). Dadurch wird gezielt der passende Index verwendet.
 
-![visual](/img/visual.png)
+![visual](img/visual.png)
 
 Der [Faiss Index](https://faiss.ai/index.html) ist eine vektorbasierte Datenbank. Dabei werden alle Texte in Vektoren umgewandelt, um bei Anfragen die inhaltlich ähnlichsten Dokumente effizient zu finden. 
 
