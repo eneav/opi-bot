@@ -32,4 +32,68 @@ anwendung:
       - hier holt sich die app alles aus der querey data file
       - es nutzt das faiss indexx (also: das MUSST du vorher mit create_database erstellt haben)
 
+
+
+
+
+
+
+------
+
+fehler in libs beheben
+
+ 1.Umgebung aktivieren:
+   .\.venv\Scripts\activate
+
+
+
+
+2.
+sicherstellen dass die richtige Umgebung aktiv ist:
+
+   (.venv) sollte im Terminal stehen.
+
+   Überprüfen mit:
+
+
+   where python        
+
+
+ 3.
+ Python-Pfad prüfen:
+
+   Get-Command python
+
+    muss auf .venv\Scripts\python.exe zeigen
+
+
+
+4.
+
+Installierte Pakete anzeigen
+   pip list
+
+
+
+
+5. Fehlende Pakete nachinstallieren:
+   pip install -r requirements.txt
+
+
+
+
+6. Einzelne Pakete prüfen mit
+
+   pip show langchain
+
+7. Wenn weiterhin Probleme:
+   Virtuelle Umgebung löschen und neu erstellen(poweshell)
+
+
+   deactivate
+   rmdir /s /q .venv                  
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   pip install -r requirements.txt
+
            

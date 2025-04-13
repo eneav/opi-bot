@@ -6,4 +6,5 @@ pandas
 python-dotenv
 streamlit
 langchain_openai
+langchain-openai
 #s

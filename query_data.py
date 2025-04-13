@@ -17,7 +17,7 @@ PROMPT_TEMPLATES = {
     "azubi": """
 Du bist ein interner FAQ-Chatbot für Auszubildende in einem Unternehmen.
 Deine Aufgabe ist es, auf Basis des Kontexts kurze, klare und verständliche Antworten zu geben.
-Sprich auf Augenhöhe mit Auszubildenden (1.–3. Lehrjahr). Vermeide Fachjargon und bleib freundlich.
+Sprich auf Augenhöhe mit Auszubildenden (1.-3. Lehrjahr). Vermeide Fachjargon und bleib freundlich.
 
 Falls die Information nicht eindeutig im Kontext steht, sage stattdessen:
 „Diese Information liegt mir nicht eindeutig vor, frage bitte dein/e Ausbildungsleiter/in. Falls du nicht weißt, wer das ist, frag gerne hier im Chat nach.“
@@ -83,10 +83,20 @@ def run_query(query_text, group="azubi"):
 
 
 
+#FALLBACK MODEL | WIRD AUTOMATISCH AUSGEWÄHLT WENN KEIN MODELL IN DER ENV HINTERLEGT IST 
+
     selected_model = os.getenv("GPT_MODEL", "gpt-3.5-turbo")                    #wenn in der env kein modell hinterlegt ist, wird auf 3.5 turbo zurückgegriffen (automatisch)
 
 
+
     model = ChatOpenAI(model=selected_model, temperature=0)
+# Je niedriger der Wert, desto konstanter ist die antwort (straight up antwort, kein drumherum reden)
+# 0 = immer gleiche und faktisch klare antworten.
+# hohe Werte wie 0.7 oder 1.0 führen zu mehr kreativität ( übermässige textgenerierung, halluzinationen)
+# und ungenauigkeiten!!!
+# In diesem Fall bewusst auf 0 gesetzt, damit bei gleichen Fragen auch gleiche antworten kommen 
+
+
 
 
     response = model.predict(prompt)

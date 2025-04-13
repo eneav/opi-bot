@@ -1,19 +1,18 @@
-# Virtuelle Umgebung
 
-# Lokale Konfig
+
 .env
 
-# Cache / Sonstiges
+# Cache
 __pycache__/
 *.pyc
 
-# FAISS Index
+
 faiss_index/
 
-# CSV-Daten
+
 data/*.csv
 
-# Sonstiges (optional)
+
 .vscode/
 
 .venv/
