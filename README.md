@@ -1,12 +1,9 @@
 # Interne Demo: RAG-FAQ für OD
 
-Dieses Projekt stellt eine interne Frage-Antwort-Anwendung bereit, die auf dem RAG-Ansatz (Retrieval-Augmented Generation) basiert. Die Daten aus einer CSV-Datei werden lokal in einer FAISS-Vektordatenbank gespeichert. 
+Dieses Projekt stellt eine interne Frage-Antwort-Anwendung bereit, die auf dem RAG-Ansatz (Retrieval-Augmented Generation) basiert. Die Daten aus einer json-Datei werden lokal in einer FAISS-Vektordatenbank gespeichert. 
 
 Die Antwortgenerierung erfolgt mithilfe der openai api (gpt-4-0125-preview).
 
-Info: Aufgrund von Einschränkungen in unserer Unternehmensumgebung (z. B. VPN) wurde FAISS statt ChromaDB eingesetzt. 
-
-FAISS ist lokal effizient und ideal für diese Demos.
 
 
 ## Funktionsweise
@@ -75,7 +72,7 @@ Das System erkennt die Gruppe anhand des Passworts (group = access_mapping.get(p
 | `create_database.py` |erzeugt gruppenspezifische FAISS-Indizes aus JSON-Dateien|
 | `query_data.py`     | durchsucht die Datenbank  und generiert eine Antwort (fragt relevanten index ab => generiert antwort|
 | `streamlit_app.py`  | frontend in streamlit mit passwortlogik und Benutzer UI |
-| `data/`             | enthält die CSV-Datenquelle, bei formatabweichung diese Logik dem programm anpassen! |
+| `data/`             | enthält die json-Datenquelle, bei formatabweichung diese Logik dem programm anpassen! |
 | `faiss_index/`      | persistente Vektordatenbank (wird automatisch erstellt mit create_database.py), muss nach änderung der datensatzes neu gestartet werden |
 | `.env.example`      | Vorlage für .env |
 
@@ -128,14 +125,7 @@ if not results or results[0][1] < 0.29:
 
 ![Incorrect Responses](img/incorrect.png)
 
-#### Random Related Responses 
-Lose verknüpfte, aber semantisch schwache Treffer mit mittlerem Score (0.3–0.6):
 
-```python
-if not results or results[0][1] < 0.54:
-```
-
-![Random Related Responses](img/random.png)
 
 #### Passende Antworten (Correct Responses)
 Hohe Scores (ab 0.7) – hier besteht starke Übereinstimmung zwischen Frage und gefundenem Kontext:
@@ -146,13 +136,14 @@ if not results or results[0][1] < 0.86:
 
 ![Correct Responses](img/correct.png)
 
+
 ---
 
 Je nach Use Case (präzision oder kulanz) ist dieser Wert frei anpassbar!
 
 ---
 
-## Modellwahl & Temperature-Wert
+## Temperature-Wert
 
 Die Modellantwort wird in `query_data.py` wie folgt erzeugt:
 ```python
@@ -165,7 +156,7 @@ model = ChatOpenAI(model=selected_model, temperature=0)
 | `temperature = 0`  | Antwort ist konstant, vorhersehbar, sachlich                             |
 | `temperature = 1`  | Antwort ist kreativ, ausschweifend, potenziell ungenau (Halluzination) |
 
-Diese Einstellung ist bei FAQ-Systemen besonders sinnvoll, da gleiche Fragen auch gleiche Antworten liefern sollen.
+Die Einstellung ist bei diesem FAQ-System ist sinnvoll, da gleiche Fragen auch gleiche Antworten liefern sollen.
 
 ### Prompt: Charakter des Bots
 Der verwendete Prompt bestimmt Ton, Sprachebene und Verhalten des Bots. 
@@ -178,9 +169,9 @@ prompt = prompt.format(context=context, question=query_text)
 ```
 
 Der Prompt beeinflusst:
-- den Sprachstil (z. B. direkt, locker, formell)
-- wie verständlich oder fachlich geantwortet wird
-- welche Rolle der Bot einnimmt (Azubi-Buddy vs. Studienberater | )
+- den Sprachstil (z.B.locker, formell)
+- wie präzise/fachlich geanwortet werden soll
+- welche Rolle der Bot einnimmt (young talents-Buddy vs. Studienberater )
 
 ---
 
@@ -211,6 +202,9 @@ Diese Demo lässt sich leicht auf andere use cases übertragen:
 
 5. **Index-Auswahl:**  
    Gruppenspezifisch den richtigen faiss index laden
+
+---
+
 
 ## Voraussetzungen
 

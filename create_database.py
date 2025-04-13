@@ -8,10 +8,9 @@ from dotenv import load_dotenv
 import pandas as pd
 
 
-load_dotenv()
+load_dotenv()               #lädrt die .env datei mit den API keys und anderen variablen ab
 
-#TODO shorten api key check
-print("prüfung api key:", os.getenv("OPENAI_API_KEY"))
+
 
 
 DATA_PATHS = {
@@ -43,7 +42,7 @@ def generate_data_store():
 
 def generate_data_store():
     for group, path in DATA_PATHS.items():
-        print(f"📁 Lade Daten für: {group} aus {path}")
+        print(f" Lade Daten für: {group} aus {path}")
         raw_json = pd.read_json(path)
         qa_pairs = pd.json_normalize(raw_json["qa_pairs"])
         qa_pairs = qa_pairs.rename(columns={"question": "Fragen", "answer": "Antworten"})
