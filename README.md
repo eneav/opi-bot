@@ -91,7 +91,7 @@ Antwort (azubi): Bitte rufe vor Arbeitsbeginn deine*n Ausbilder*in an und gib Be
 ```
 
 ---
-![beispielausgabe](img\image.png)
+![beispielausgabe](img/image.png)
 
 
 ---
