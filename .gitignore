@@ -2,10 +2,10 @@
 
 .env
 
-# Cache
+#cache
 __pycache__/
 *.pyc
-__pycache__
+
 
 faiss_index/
 
