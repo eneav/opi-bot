@@ -75,6 +75,126 @@
       {
         "Fragen": "Wie funktioniert die Spezialisierung im Studium?",
         "Antworten": "Dazu ist eine individuelle Abstimmung mit Luisa Geverler notwendig."
+      },
+      {
+        "Fragen": "Welche Sicherheitsvorschriften gelten im Betrieb?",
+        "Antworten": "Entzündliche Materialien dürfen nicht in Treppenhaus, Fluchtwegen oder sicherheitsrelevanten Räumen gelagert werden. Fluchtwege sind freizuhalten und Sicherungskästen müssen frei zugänglich sein. Selbst mitgebrachte elektrische Geräte wie Wasserkocher oder Kaffeemaschinen sind am Arbeitsplatz verboten. Vom Betrieb gestellte elektrische Geräte (Ventilatoren, Radio, Heizlüfter, etc.) sind nach dem Gebrauch auszuschalten. Defekte Geräte sind umgehend der Führungskraft/Ausbildungsbeauftragten zu melden."
+      },
+      {
+        "Fragen": "Welche Regeln gelten für das Rauchen?",
+        "Antworten": "Es besteht ein absolutes Rauchverbot in allen Gebäuden der opta data Gruppe. Das gilt für alle Arten des Rauchens! Rauchen ist nur in ausgewiesenen Raucherbereichen erlaubt. Offenes Feuer, z. B. Kerzen, ist nicht gestattet."
+      },
+      {
+        "Fragen": "Wie darf ich private Mobiltelefone am Arbeitsplatz nutzen?",
+        "Antworten": "Private Mobiltelefone dürfen nur in lautlosem Zustand zur Arbeit mitgebracht werden. Nutzung ist ausschließlich in Pausenzeiten gestattet. Dienstliche Mobiltelefone dürfen nur für berufliche Zwecke verwendet werden. Private Auslandstelefonate mit geschäftlichen Mobiltelefonen sind verboten."
+      },
+      {
+        "Fragen": "Wie melde ich mich im Krankheitsfall?",
+        "Antworten": "In jedem Fall muss am ersten Tag der Erkrankung eine E-Mail an krankmeldungen_youngtalents@optadata-gruppe.de und den zuständigen Ausbildungsbeauftragten gesendet werden. Die Abmeldung muss bis spätestens 9.00 Uhr schriftlich per E-Mail erfolgen! Dabei ist die voraussichtliche Krankheitsdauer anzugeben und ob ein Arzt aufgesucht wird. Sollte ein Arzt aufgesucht werden, muss die Dauer der Krankmeldung durch den Arzt noch am selben Tag nachgemeldet werden. Zudem muss in der Abteilung erfragt werden, ob es in der Abteilung noch weitere Regelungen zur Krankmeldung gibt. Diese müssen mit dem Ausbildungsbeauftragten abgestimmt werden. Wenn du eine Ausbildung in der IT machst muss der E-Mail der Krankmeldung an krankmeldungen_youngtalents@optadata-gruppe.de und an IT-Ausbildungsbeauftragte@optadata-gruppe.de gesendet werden. Ab dem zweiten Lehrjahr an krankmeldungen_youngtalents@optadata-gruppe.de und an die Mentor:innen. Bitte erfrage hier die Info in deinem Team. Spätestens am dritten Krankheitstag ist eine ärztliche Arbeitsunfähigkeitsbescheinigung erforderlich. Bei einer Krankmeldung an einem Montag oder Freitag ist immer eine Arbeitsunfähigkeitsbescheinigung erforderlich. Diese Regelungen gelten auch für Schultage bzw. den Berufsschulblock. An Schultagen ist die Berufsschule ebenfalls über die Abwesenheit zu informieren und zusätzlich der Abmeldeprozess der Berufsschule einzuhalten."
+      },
+      {
+        "Fragen": "Wie melde ich eine Krankmeldung ohne AU in GFOS?",
+        "Antworten": "Bei einer Krankmeldung ohne AU musst du die Krankmeldung selbstständig in GFOS beantragen, es sei denn du hast an diesem Tag Berufsschule. In diesem Fall übernimmt das Young Talents-Team die Krankmeldung."
+      },
+      {
+        "Fragen": "Wie melde ich eine Krankmeldung mit AU in GFOS?",
+        "Antworten": "Bei Krankmeldung mit AU: Diese Krankmeldung wird vom Young Talents-Team in GFOS eingepflegt."
+      },
+      {
+        "Fragen": "Wie schreibe ich eine richtige Krankmeldung?",
+        "Antworten": "Vorschlag für die Krankmeldung: 'Guten Morgen zusammen, hiermit möchte ich euch darüber informieren, dass ich vom Arzt für folgenden Zeitraum arbeitsunfähig geschrieben wurde: Beginn der Arbeitsunfähigkeit: XX.XX.2023 Ende der Arbeitsunfähigkeit: XX.XX.2023 Viele Grüße,'"
+      },
+      {
+        "Fragen": "Wie schreibe ich eine korrekte Abwesenheitsnotiz?",
+        "Antworten": "Sehr geehrte Damen und Herren, vielen Dank für Ihre Nachricht. Ich bin bis einschließlich XX.XX.XXXX nicht im Haus. Meine E-Mails werden nicht automatisch weitergeleitet. Wenden Sie sich bei Fragen bitte an XY (Tel., m.mustermann@optadata-gruppe.de) Ab dem XX.XX.XXXX stehe ich Ihnen wieder wie gewohnt zur Verfügung. Diese Abwesenheitsnachricht wird Ihnen innerhalb von 24 Stunden einmal gesendet. Besten Dank. Mit freundlichen Grüßen i. A. Max Mustermann - Signatur -"
+      },
+      {
+        "Fragen": "Welche Regeln gelten für den Umgang mit dem Mitarbeiterausweis?",
+        "Antworten": "Die Weitergabe des Mitarbeiterausweises an Dritte ist verboten. Der Ausweis muss immer sichtbar bei sich geführt werden. Der Verlust des Ausweises muss umgehend bei der Personalverwaltung gemeldet werden. Ein neuer Mitarbeiterausweis kann über Guidecom unter 'Service' beantragt werden."
+      },
+      {
+        "Fragen": "Welche Regeln gelten für den Besuch von externen Personen?",
+        "Antworten": "Nur erlaubt, wenn ein konkretes geschäftsbezogenes Anliegen vorliegt. Müssen zuvor am Empfang angemeldet werden. Betriebsfremde Personen müssen auf dem Gelände begleitet werden & einen Gastausweis offen bei sich tragen. Datenschutzverstöße dürfen keinesfalls zugelassen werden."
+      },
+      {
+        "Fragen": "Wie funktioniert die Parkplatzregelung?",
+        "Antworten": "Über Guidecom kann man einen Parkplatz/Parkausweis anmieten/beauftragen. Parkhaus am Campus: Mitarbeiter, die einen Parkplatz angemietet haben, erhalten einen Parkausweis für die Schranke. Im Parkhaus selbst gilt weitgehend freie Parkplatzwahl. Parkplatz BBB461/459: Mitarbeiter haben ebenfalls die Möglichkeit, einen Parkplatz auf dem Gelände anzumieten. Gekennzeichnete Besucherparkplätze stehen ausschließlich für Externe zur Verfügung."
+      },
+      {
+        "Fragen": "Welche Regeln gelten für den Konsum von Alkohol und Drogen?",
+        "Antworten": "Der Genuss von alkoholischen Getränken und der Konsum von Drogen ist am Arbeitsplatz und auf dem Gelände während der Arbeitszeit verboten. Es ist verboten, im alkoholisierten oder rauschbedingtem Zustand zur Arbeit zu erscheinen. Nur bei besonderen Anlässen darf der Betrieb den Konsum von Alkohol in gemäßigten Mengen gewähren. Vom Verbot ausgenommen sind ärztlich verordnete Medikamente und der Konsum von Tabak in den ausgewiesenen Bereichen."
+      },
+      {
+        "Fragen": "Welche Regelungen gelten für Azubi-Veranstaltungen und Schulungen?",
+        "Antworten": "Auszubildende/DS müssen für Young Talents Veranstaltungen und Schulungen von ihrer jeweiligen Abteilung freigestellt werden. Die entsprechenden Termine werden frühzeitig bekannt gegeben."
+      },
+      {
+        "Fragen": "Wie lautet die korrekte Signaturvorlage?",
+        "Antworten": "i.A. Max Mustermann - Auszubildender/ Dualer Student *Beruf* | Einsatzort - opta data Stiftung & Co. KG Berthold-Beitz-Boulevard XXX 45141 Essen m.mustermann@optadata-gruppe.de"
+      },
+      {
+        "Fragen": "Wie lauten die WLAN-Zugangsdaten?",
+        "Antworten": "WLAN für Mitarbeiter:innen und Besucher:innen: Netzwerkname: opta data Gruppe Besucher Passwort: yUXmH7Zc9v"
+      },
+      {
+        "Fragen": "Welche Regeln gelten für Mitarbeiterschulungen?",
+        "Antworten": "Digitale Mitarbeiterschulungen wie bspw. Brandschutz- oder Geldwäsche-Präventionsschulungen müssen unbedingt in regelmäßigen Abständen durchgeführt und die Nachweise in Magellan hochgeladen werden. Die Durchführung zählt zur Arbeitszeit und kann individuell am Arbeitsplatz erfolgen."
+      },
+      {
+        "Fragen": "Wie werden Nebentätigkeiten geregelt?",
+        "Antworten": "Einer entgeltlichen Nebentätigkeit eines Auszubildenden muss der Arbeitgeber im vorhinein zustimmen."
+      },
+      {
+        "Fragen": "Wie lange dauert die Probezeit?",
+        "Antworten": "Bei Auszubildenden gelten die ersten 4 Monate als Probezeit, bei Dualstudierenden gelten die ersten 6 Monate als Probezeit. Innerhalb der Probezeit kann das Arbeitsverhältnis beidseitig mit einer Frist von zwei Wochen gekündigt werden."
+      },
+      {
+        "Fragen": "Wie kann ich meine Gehaltsabrechnungen einsehen?",
+        "Antworten": "Teams > odNet> VRG/Gehaltsabrechnungen> 000Mitarbeiternummer> Passwort zurücksetzen> Neu anmelden mit Benutzername: 000Mitarbeiternummer Passwort: eigenes Passwort."
+      },
+      {
+        "Fragen": "Brauche ich eine VPN-Verbindung für den Zugriff auf die Unternehmenssysteme?",
+        "Antworten": "Für den Zugriff auf M365 ist keine aktive VPN-Verbindung notwendig. Für den Zugriff auf Systeme wie GFOS, EVA3, etc. ist allerdings eine aktive VPN-Verbindung mit unserem Firmennetz über den Cisco Secure Client notwendig (gilt für remote work / home office)."
+      },
+      {
+        "Fragen": "Wie wird Home Office geregelt?",
+        "Antworten": "Home Office ist mit den jeweiligen Abteilungen, in denen man sich befindet, abzustimmen. Personalverwaltung: alles rund um Gehalt/ bei Dualen Studenten auch in Richtung Mehrarbeit in den Semesterferien."
+      },
+      {
+        "Fragen": "Wer sind meine Ansprechpartner bei Problemen?",
+        "Antworten": "Probleme mit GFOS: gfos@optadata-gruppe.de IT-Service Desk: 15555\n\nAusbilder:innen (Team Young Talents): Ansprechpartner:innen für allgemeine Themen der Ausbildung.\n\n- Isabel Nickel: Ansprechpartnerin für IT-Auszubildende\n- Luisa Geveler: Ansprechpartnerin für dual Studierende\n- Julia Brunsmann: Ansprechpartnerin für kaufmännische Auszubildende\n\nAusbildungsbeauftragte: Zuständig für abteilungsspezifische bzw. fachspezifische Fragen. Bei internen Angelegenheiten bitte die Ausbildungsbeauftragten vor Ort ansprechen"
+      },
+      {
+        "Fragen": "Was ist der Unterschied zwischen Ausbilder:in und Ausbildungsbeauftragten?",
+        "Antworten": "Ausbilder:innen (Team Young Talents): Ansprechpartner:innen für allgemeine Themen der Ausbildung.\n\n- Isabel Nickel: Ansprechpartnerin für IT-Auszubildende\n- Luisa Geveler: Ansprechpartnerin für dual Studierende\n- Julia Brunsmann: Ansprechpartnerin für kaufmännische Auszubildende\n\nAusbildungsbeauftragte: Zuständig für abteilungsspezifische bzw. fachspezifische Fragen. Bei internen Angelegenheiten bitte die Ausbildungsbeauftragten vor Ort ansprechen."
+      },
+      {
+        "Fragen": "Wie melde ich Adressänderungen, Änderungen der Krankenkasse oder des Bankkontos?",
+        "Antworten": "Bei Adressänderungen, Änderungen der Krankenkasse oder des Bankkontos: Bitte melde dich hierzu direkt bei der Personalverwaltung unter personalverwaltung@optadata-gruppe.de."
+      },
+      {
+        "Fragen": "Wie viele Wochenstunden müssen Auszubildende und Duale Studenten arbeiten?",
+        "Antworten": "Wochenarbeitszeit: Auszubildende: 40 Stunden, Duale Studenten: 20 Stunden"
+      },
+      {
+        "Fragen": "Welche Pausenregelungen gelten für Auszubildende und Duale Studenten?",
+        "Antworten": "Auszubildende/DS über 18 Jahre müssen bei mehr als 6 Stunden Arbeit mindestens 30 Minuten Pause einhalten. Pausenmodelle: 1x30 Minuten oder 2x15 Minuten. Auszubildende/DS unter 18 Jahren müssen bei einer täglichen Arbeitszeit von 4,5 Stunden eine Pausenzeit von mind. 1 Std. einhalten. Pausenmodelle: 2x30 Minuten; 1x30 und 2x15 Minuten; 4x15 Minuten. Zeiterfassung: Alle Zeiten müssen im GFOS-System korrekt eingetragen werden. Machst du eine Pause, die länger als deine gesetzlich vorgeschriebene Pausenzeit geht, muss ebenfalls in GFOS eingepflegt werden. Plus- oder Minusstunden sind zu vermeiden. Ausnahmen bis ±5 Stunden müssen genehmigt und die Ausbilder:in informiert werden. Plus- oder Minusstunden sind zeitnah wieder ab- bzw. aufzubauen. Auszubildenden/DS unter 18 Jahren ist die Mehrarbeit untersagt."
+      },
+      {
+        "Fragen": "Bei welchen Ereignissen wird Sonderurlaub gewährt?",
+        "Antworten": "Sonderurlaub wird bei bestimmten Ereignissen gewährt: Vor Prüfung Teil 1: 1 Tag. Zudem ist Auszubildender für den Tag der Prüfung freigestellt. Vor der schriftlichen und mündlichen Abschlussprüfung: 1 Tag. Zudem ist Auszubildender für den Tag der Prüfung freigestellt. Eigene Eheschließung: 2 Tage. Eheschließung eines Angehörigen 1. Grades: 1 Tag. Sterbefall eines Angehörigen 1. Grades: 5 Tage. Umzug mit eigenem Hausstand: 1 Tag. (Änderung Adresse in Magellan hinterlegen, Bescheinigung an die Personalverwaltung schicken, IHK über neue Adresse informieren). Nichtgebährender Elternteil bei Geburt eines Kindes: 2 Tage. Mit Inanspruchnahme ist ein amtlicher Nachweis des auslösenden Ereignisses vorzulegen bzw. innerhalb von 14 Tagen nachzureichen."
+      },
+      {
+        "Fragen": "Wie beantrage ich Sonderurlaub?",
+        "Antworten": "Der Sonderurlaub muss in GFOS beantragt werden. Dieser wird im nächsten Schritt vom Young Talents Team genehmigt und zur Personalverwaltung weitergeleitet. Damit der Sonderurlaub offiziell genehmigt wird, muss ggf. eine Bescheinigung an die Personalverwaltung weitergeleitet werden (gfos@optadata-gruppe.de)."
+      },
+      {
+        "Fragen": "Welche Nachweise muss ich bei verschiedenen Arten von Sonderurlaub einreichen?",
+        "Antworten": "Sonderurlaub Umzug: Bitte sende im Nachgang eine Kopie deiner Meldebescheinigung an die Personalverwaltung (gfos@optadata-gruppe.de). Sonderurlaub Sterbefall: Bitte sende im Nachgang eine Kopie deiner Sterbeurkunde an die Personalverwaltung (gfos@optadata-gruppe.de). Sonderurlaub Eheschließung: Bitte sende im Nachgang eine Kopie der Eheurkunde an die Personalverwaltung (gfos@optadata-gruppe.de)."
+      },
+      {
+        "Fragen": "Wie viel Urlaubsanspruch haben Duale Studenten?",
+        "Antworten": "Duales Studium: Urlaubsanspruch (1,5 Tage pro Monat im 20/20-Modell): Zum Studienstart stehen dir für die verbleibenden Monate (Sept.-Dez.) 6 Tage zu. Für jedes weitere Jahr stehen dir 18 Tage zu. Urlaubsanspruch kann sich erhöhen, wenn in Semesterferien Vollzeit gearbeitet wird."
       }
     ]
   }
