@@ -14,6 +14,10 @@ FAISS ist lokal effizient und ideal für diese Demos.
 Das System durchsucht auf Basis eines Embedding-Vergleichs (Vektorsuche) die relevantesten Einträge in der Datenbank und stellt dem OpenAI-Modell (z. B. GPT-3.5) diese als Kontext zur Verfügung. Nur basierend auf diesem Kontext wird eine Antwort erzeugt.
 
 
+In der Oberfläche fragt das Tool nach einem Passwort, das die Gruppe identifiziert ("azubi123" = Azubis, "student456" = Studierende). Dadurch wird gezielt der passende Index verwendet.
+
+![visual](/img/visual.png)
+
 Der [Faiss Index](https://faiss.ai/index.html) ist eine vektorbasierte Datenbank. Dabei werden alle Texte in Vektoren umgewandelt, um bei Anfragen die inhaltlich ähnlichsten Dokumente effizient zu finden. 
 
 ## Einrichtung
@@ -33,77 +37,74 @@ pip install -r requirements.txt
 Lege eine Datei `.env` an (oder kopiere `.env.example`) mit folgendem Inhalt:
 ```env
 OPENAI_API_KEY=your-api-key-here
-GPT_MODEL=gpt-3.5-turbo
+GPT_MODEL=gpt-4-0125-preview
 ```
 
-GPT-3.5 ist ideal für kompakte Antworten in FAQ-Formaten, weil es zuverlässig, schnell und günstig arbeitet.
 
 
 
 ## Nutzung
 
-### 1. Datenbank aus CSV erzeugen
+### 1. Datenbank erzeugen (mehrdimensional)
 ```bash
 python create_database.py
 ```
 
-Nach Ausführung solltest du im Verzeichnis `faiss_index/` insgesamt 2 `.faiss`-Dateien sehen.  
+Dieser Schritt liest beide Gruppen-Dateien (azubis.json, studenten.json) ein, splittet die Antworten in Text-Chunks und erstellt getrennte FAISS-Datenbanken.
 
-![Anwendung](/img/image2.png)
-
-Wenn der Ordner leer bleibt wurde die Datenbank nicht korrekt erstellt. Stelle sicher, dass:
-- Die CSV-Datei vorhanden und korrekt formatiert ist
-
-![Anwendung](/img/image3.png)
-
-- Die `.env`-Datei gültige API-Zugänge enthält
+Nach erfolgreicher Ausführung sollten im Ordner `faiss_index/` zwei neue Unterverzeichnisse vorhanden sein:
+- `azubi_index/`
+- `student_index/`
 
 
-### 2. Anwendung starten (mit Web-Oberfläche | STREAMLIT)
+### 2. Anwendung starten (streamlit)
 ```bash
 streamlit run streamlit_app.py
 ```
 
-Dies öffnet eine interaktive FAQ-Oberfläche im Browser, über die du direkt Fragen stellen kannst.
+Danach kann im Browser eine FAQ-Frage an den chatbot gestellt werden. 
+Das System erkennt die Gruppe anhand des Passworts (group = access_mapping.get(password.strip().lower())) und leitet die Eingabe korrekt weiter.
+
+
 
 
 ## Projektstruktur
 
 | Datei / Ordner     | Beschreibung |
 |--------------------|--------------|
-| `create_database.py` | Erstellt die Datenbank (FAISS)auf basis der daten von data/|
-| `query_data.py`     | Durchsucht die Datenbank  und generiert eine Antwort |
-| `streamlit_app.py`  | Streamlit-basierende GUI |
+| `create_database.py` |erzeugt gruppenspezifische FAISS-Indizes aus JSON-Dateien|
+| `query_data.py`     | durchsucht die Datenbank  und generiert eine Antwort (fragt relevanten index ab => generiert antwort|
+| `streamlit_app.py`  | frontend in streamlit mit passwortlogik und Benutzer UI |
 | `data/`             | enthält die CSV-Datenquelle, bei formatabweichung diese Logik dem programm anpassen! |
-| `faiss_index/`      | persistente Vektordatenbank (wird automatisch erstellt mit create_database.py) |
-| `.env.example`      | Vorlage für Umgebungsvariablen |
+| `faiss_index/`      | persistente Vektordatenbank (wird automatisch erstellt mit create_database.py), muss nach änderung der datensatzes neu gestartet werden |
+| `.env.example`      | Vorlage für .env |
 
-## Voraussetzungen
 
-- Python 3.10 (oder höher)
-- Gültiger OpenAI API Key 
-- Optional: Streamlit (für GUI)
+
+
 
 ## Beispielausgabe
-
 ```bash
-Frage: Wie melde ich mich krank?
+Frage: Wie funktioniert die Krankmeldung?
 
-Antwort: Bitte melden Sie sich vor Arbeitsbeginn telefonisch bei Ihrer Führungskraft.
+Antwort (azubi): Bitte rufe vor Arbeitsbeginn deine*n Ausbilder*in an und gib Bescheid. Die Krankmeldung reichst du später schriftlich nach.
 ```
 
-![Anwendung](img/image.png)
+---
+![beispielausgabe](img\image.png)
 
 
 ---
 
 ## Anpassung des Confidence Scores
 
-Um die Relevanz einer Antwort zu bewerten, wird ein sogenannter Confidence Score verwendet. Dieser Wert liegt zwischen `0` und `1` und gibt an, wie sicher das System ist, dass der zurückgegebene Kontext zur gestellten Frage passt.
+Um die Relevanz einer Antwort zu bewerten, wird ein sogenannter Confidence Score verwendet. 
 
-### Code-Snippet zur Anpassung
+Dieser Wert liegt zwischen `0` und `1` und gibt an, wie sicher das System ist, dass der zurückgegebene Kontext zur gestellten Frage passt.
 
-In der Datei `query_data.py` (bzw. wo die `run_query()`-Funktion also liegt), kann der Confidence Score angepasst werden. Die Standardgrenze für die ich mich entschieden habe liegt bei `0.5`. Treffer darunter werden als irrelevant gewertet:
+### Snippet zur Anpassung
+
+In der Datei `query_data.py` (bzw. wo die `run_query()`funktion also liegt), kann der Confidence Score angepasst werden. Die Standardgrenze für die ich mich entschieden habe liegt bei `0.5`.
 
 ```python
 if not results or results[0][1] < 0.5:
@@ -148,3 +149,75 @@ if not results or results[0][1] < 0.86:
 ---
 
 Je nach Use Case (präzision oder kulanz) ist dieser Wert frei anpassbar!
+
+---
+
+## Modellwahl & Temperature-Wert
+
+Die Modellantwort wird in `query_data.py` wie folgt erzeugt:
+```python
+model = ChatOpenAI(model=selected_model, temperature=0)
+```
+
+### Wirkung des Temperature-Werts
+| Einstellung        | Wirkung                                                                 |
+|--------------------|-------------------------------------------------------------------------|
+| `temperature = 0`  | Antwort ist konstant, vorhersehbar, sachlich                             |
+| `temperature = 1`  | Antwort ist kreativ, ausschweifend, potenziell ungenau (Halluzination) |
+
+Diese Einstellung ist bei FAQ-Systemen besonders sinnvoll, da gleiche Fragen auch gleiche Antworten liefern sollen.
+
+### Prompt: Charakter des Bots
+Der verwendete Prompt bestimmt Ton, Sprachebene und Verhalten des Bots. 
+
+Er ist jeweils angepasst auf Azubis oder Studierende und wird nur beim Aufruf dynamisch gesetzt. 
+
+```python
+prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATES[group])
+prompt = prompt.format(context=context, question=query_text)
+```
+
+Der Prompt beeinflusst:
+- den Sprachstil (z. B. direkt, locker, formell)
+- wie verständlich oder fachlich geantwortet wird
+- welche Rolle der Bot einnimmt (Azubi-Buddy vs. Studienberater | )
+
+---
+
+
+## Skalierung auf andere Use Cases
+
+Diese Demo lässt sich leicht auf andere use cases übertragen:
+
+**Beispielhafte Use Cases:**
+- internes IT-Wissenssystem (jira knowledge base)
+- Infrastructure Inventory Assistant
+- Mitarbeiter-Onboarding FAQ
+- Schulungssystem für verschiedene Abteilungen
+
+**Anpassungsschritte:**
+
+1. **Prompt anpassen:**  
+   In `query_data.py` oder `PROMPT_TEMPLATES` einen neuen Prompt für die Zielgruppe hinterlegen (z. B. "Du bist ein KI-Assistent für Systemadministratoren, etc...").
+
+2. **Neue JSON-Datei:**  
+   Struktur: `{"qa_pairs": [{"Fragen": ..., "Antworten": ...}]}`
+
+3. **Datenbank-Erstellung:**  
+   `create_database.py` um neue Gruppe ergänzen im faiss index(z. B. "infra": "data/infra_qa.json")
+
+4. **Frontend erweitern:**  
+   In `streamlit_app.py` ein weiteres Passwort zur Gruppen id (access_mapping) hinzufügen.
+
+5. **Index-Auswahl:**  
+   Gruppenspezifisch den richtigen faiss index laden
+
+## Voraussetzungen
+
+- Python 3.10 (oder höher)
+- Gültiger OpenAI API Key 
+- Optional: Streamlit (für GUI)
+
+## Autor
+Enes Avsar -2025
+
