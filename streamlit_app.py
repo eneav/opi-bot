@@ -91,12 +91,10 @@ st.markdown(
 
 
 
-# st.write("""
-# Bitte gib das Passwort deiner jeweiligen Abteilung ein. Diesen bekommst du von deinem Abteilungsleiter, deiner/m Ausbilder/in oder deinem Buddy:
+st.write("""
+Bitte gib das Passwort deiner jeweiligen Abteilung ein. Diesen bekommst du von deinem Abteilungsleiter:
 
-# - azubi = azubi123  
-# - student = student456
-# """)
+""")
 
 
 
