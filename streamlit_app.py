@@ -125,3 +125,11 @@ if password:
                 st.success(f"**Antwort ({group}):**\n\n{response}")
             except Exception as e:
                 st.error(f"Es ist ein Fehler aufgetreten:\n\n{e}")
+
+
+
+# Footer-Link
+st.markdown(
+    "<p style='text-align: center; font-size: 12px; color: gray;'>Mehr Infos auf <a href='https://github.com/eneav/opi-bot' target='_blank' style='color: gray;'>GitHub</a></p>",
+    unsafe_allow_html=True
+)

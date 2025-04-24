@@ -1,4 +1,4 @@
-# Interne Demo: RAG-FAQ für OD
+# Demo: opi-bot@OD 
 
 Dieses Projekt stellt eine interne Frage-Antwort-Anwendung bereit, die auf dem RAG-Ansatz (Retrieval-Augmented Generation) basiert. Die Daten aus einer json-Datei werden lokal in einer FAISS-Vektordatenbank gespeichert. 
 
@@ -11,9 +11,9 @@ Die Antwortgenerierung erfolgt mithilfe der openai api (gpt-4-0125-preview).
 Das System durchsucht auf Basis eines Embedding-Vergleichs (Vektorsuche) die relevantesten Einträge in der Datenbank und stellt dem OpenAI-Modell (z. B. GPT-3.5) diese als Kontext zur Verfügung. Nur basierend auf diesem Kontext wird eine Antwort erzeugt.
 
 
-In der Oberfläche fragt das Tool nach einem Passwort, das die Gruppe identifiziert ("azubi123" = Azubis, "student456" = Studierende). Dadurch wird gezielt der passende Index verwendet.
+In der Oberfläche fragt das Tool nach einem Passwort, das die Gruppe identifiziert. Dadurch wird gezielt der passende Index verwendet.
 
-![visual](img/visual.png)
+![visual](img/visual.gif)
 
 Der [Faiss Index](https://faiss.ai/index.html) ist eine vektorbasierte Datenbank. Dabei werden alle Texte in Vektoren umgewandelt, um bei Anfragen die inhaltlich ähnlichsten Dokumente effizient zu finden. 
 
@@ -81,15 +81,9 @@ Das System erkennt die Gruppe anhand des Passworts (group = access_mapping.get(p
 
 
 ## Beispielausgabe
-```bash
-Frage: Wie funktioniert die Krankmeldung?
-
-Antwort (azubi): Bitte rufe vor Arbeitsbeginn deine*n Ausbilder*in an und gib Bescheid. Die Krankmeldung reichst du später schriftlich nach.
-```
 
 ---
-![beispielausgabe](img/image.png)
-
+![beispielausgabe](img/todbeispiel.gif)
 
 ---
 
@@ -206,12 +200,6 @@ Diese Demo lässt sich leicht auf andere use cases übertragen:
 ---
 
 
-## Voraussetzungen
-
-- Python 3.10 (oder höher)
-- Gültiger OpenAI API Key 
-- Optional: Streamlit (für GUI)
 
 ## Autor
-Enes Avsar -2025
-
+Enes Avsar
