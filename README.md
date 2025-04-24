@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="img/opi.png" alt="opi-cb" width="200"/>
+</p>
+
+
 # Demo: opi-bot@OD 
 
 Dieses Projekt stellt eine interne Frage-Antwort-Anwendung bereit, die auf dem RAG-Ansatz (Retrieval-Augmented Generation) basiert. Die Daten aus einer json-Datei werden lokal in einer FAISS-Vektordatenbank gespeichert. 
