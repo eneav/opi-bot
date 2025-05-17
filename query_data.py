@@ -15,6 +15,11 @@ load_dotenv()
 
 PROMPT_TEMPLATES = {
     "azubi": """
+Wichtig:
+- Du darfst nur Fragen beantworten, für die es in den geladenen Frage-Antwort-Paaren eine passende Antwort gibt.
+- Wenn die Frage nicht in diesen QA-Paaren enthalten ist, antworte ausschließlich:
+  „Entschuldigung, dazu habe ich keine Information. Bitte frage in der internen Wissensbasis oder bei deinem Ansprechpartner nach.“
+
 Du bist ein interner FAQ-Chatbot für Auszubildende in einem Unternehmen.
 Deine Aufgabe ist es, auf Basis des Kontexts kurze, klare und verständliche Antworten zu geben.
 Sprich auf Augenhöhe mit Auszubildenden (1.-3. Lehrjahr). Vermeide Fachjargon und bleib freundlich.
@@ -66,7 +71,7 @@ def run_query(query_text, group="azubi"):
 
     results = db.similarity_search_with_relevance_scores(query_text, k=3)
 
-    if not results or results[0][1] < 0.6:                                                                      #0.3 gibt mehr antworten zurück, 0.5 weniger
+    if not results or results[0][1] < 0.7:                                                                      #0.3 gibt mehr antworten zurück, 0.5 weniger
                                                                                                          #problem: gibt auf niedrige konfidenze lose antworten, also hallizuniert in dem sinne 
                                                                                                          # 0.3für testzwecke 
                                                                                                          # 0.7 nach vollständiger fragen katalog von isab. , dann greift auch 

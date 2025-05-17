@@ -1,161 +1,120 @@
-# Demo: opi-bot@OD 
+# opi‑bot — Interner Wissensassistent
 
 <p align="center">
-  <img src="img/opi.png" alt="opi-cb" width="200"/>
+  <img src="img/opi.png" alt="opi‑bot Logo" width="290"/>
 </p>
 
+**opi‑bot** ist ein internes FAQ‑System auf Basis von Retrieval‑Augmented Generation (RAG).  
+Alle Fragen‑ und Antwortpaare werden lokal als Vektoren in einer FAISS‑Datenbank gespeichert. Ein OpenAI‑Modell (Standard: **gpt‑4‑0125‑preview**) erzeugt daraufhin fundierte Antworten – ausschließlich aus dem gefundenen Kontext.
 
-Dieses Projekt stellt eine interne Frage-Antwort-Anwendung bereit, die auf dem RAG-Ansatz (Retrieval-Augmented Generation) basiert. Die Daten aus einer json-Datei werden lokal in einer FAISS-Vektordatenbank gespeichert. 
+# Inhaltsverzeichnis
 
-Die Antwortgenerierung erfolgt mithilfe der openai api (gpt-4-0125-preview).
+- [Funktionsweise & Architektur](#funktionsweise--architektur)
+- [Projektstruktur](#projektstruktur)
+- [Installation](#installation)
+- [Datenbank erstellen](#datenbank-erstellen)
+- [Start der Anwendung](#start-der-anwendung)
+- [Konfigurationen](#konfigurationen)
+- [Admin-Editor](#7-admin-editor)
+- [Anpassung an andere Fachbereiche](#8-anpassung-an-andere-fachbereiche)
+- [Beispielausgabe](#beispielausgabe)
 
 
 
-## Funktionsweise
+---
 
-Das System durchsucht auf Basis eines Embedding-Vergleichs (Vektorsuche) die relevantesten Einträge in der Datenbank und stellt dem OpenAI-Modell (z. B. GPT-3.5) diese als Kontext zur Verfügung. Nur basierend auf diesem Kontext wird eine Antwort erzeugt.
+## Funktionsweise & Architektur
 
+1. **Embedding‑Erstellung**  
+   Die Texte der hochgeladenen JSON‑Datei werden in Vektoren umgewandelt und gruppen­weise in einer FAISS‑Indexstruktur abgelegt.
 
-In der Oberfläche fragt das Tool nach einem Passwort, das die Gruppe identifiziert. Dadurch wird gezielt der passende Index verwendet.
+2. **Vektorsuche**  
+   Bei einer Nutzerfrage werden die semantisch ähnlichsten Passagen gesucht (Cosine Similarity).
 
-![visual](img/visual.gif)
+3. **Antwortgenerierung**  
+   Nur diese Treffer werden dem LLM als _Kontext_ übergeben.  
+   Ein strenger Prompt verhindert Halluzinationen und schränkt das Modell auf die interne Wissensbasis ein.
 
-Der [Faiss Index](https://faiss.ai/index.html) ist eine vektorbasierte Datenbank. Dabei werden alle Texte in Vektoren umgewandelt, um bei Anfragen die inhaltlich ähnlichsten Dokumente effizient zu finden. 
+<p align="center">
+  <img src="img/visual.gif" alt="Ablaufdiagramm" width="450"/>
+</p>
 
-## Einrichtung
+---
 
-### 1. Virtuelle Umgebung erstellen und aktivieren (.venv)
+## Projektstruktur
+
+| Pfad / Datei                 | Zweck                                                          |
+|------------------------------|----------------------------------------------------------------|
+| `data/*.json`                | Quelldateien im Format `{"qa_pairs":[{"Fragen":…,"Antworten":…}]}` |
+| `create_database.py`         | Erstellt/aktualisiert gruppenspezifische FAISS‑Indizes         |
+| `faiss_index/<group>_index/` | Persistente Vektordatenbanken je Gruppe                        |
+| `utils/qa_validator.py`      | LLM‑gestützte Qualitätskontrolle einzelner QA‑Paare            |
+| `query_data.py`              | Vektorsuche + Antworterstellung (Prompting / Temperature)      |
+| `streamlit_app.py`           | Web‑Frontend inkl. Admin‑Editor und Chat‑Interface             |
+
+---
+
+## Installation
+
 ```bash
+# 1. virtuelle Umgebung
 python -m venv .venv
-.\.venv\Scripts\activate
-```
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
 
-### 2. requirements installieren
-```bash
+# 2. Abhängigkeiten
 pip install -r requirements.txt
+
+# 3. Umgebungsvariablen (.env)
+echo 'OPENAI_API_KEY=sk-…'     >> .env
+echo 'GPT_MODEL=gpt-4-0125-preview' >> .env
 ```
 
-### 3. environment definieren
-Lege eine Datei `.env` an (oder kopiere `.env.example`) mit folgendem Inhalt:
-```env
-OPENAI_API_KEY=your-api-key-here
-GPT_MODEL=gpt-4-0125-preview
-```
+---
 
+## Datenbank erstellen
 
-
-
-## Nutzung
-
-### 1. Datenbank erzeugen (mehrdimensional)
 ```bash
 python create_database.py
 ```
 
-Dieser Schritt liest beide Gruppen-Dateien (azubis.json, studenten.json) ein, splittet die Antworten in Text-Chunks und erstellt getrennte FAISS-Datenbanken.
+Liest alle JSON‑Dateien im `data/`‑Ordner ein und erzeugt FAISS‑Indizes.
+Bei Änderungen an den Quelldaten muss dieser Schritt erneut ausgeführt werden.
 
-Nach erfolgreicher Ausführung sollten im Ordner `faiss_index/` zwei neue Unterverzeichnisse vorhanden sein:
-- `azubi_index/`
-- `student_index/`
+---
 
+## Start der Anwendung
 
-### 2. Anwendung starten (streamlit)
 ```bash
 streamlit run streamlit_app.py
 ```
 
-Danach kann im Browser eine FAQ-Frage an den chatbot gestellt werden. 
-Das System erkennt die Gruppe anhand des Passworts (group = access_mapping.get(password.strip().lower())) und leitet die Eingabe korrekt weiter.
-
-
-
-
-## Projektstruktur
-
-| Datei / Ordner     | Beschreibung |
-|--------------------|--------------|
-| `create_database.py` |erzeugt gruppenspezifische FAISS-Indizes aus JSON-Dateien|
-| `query_data.py`     | durchsucht die Datenbank  und generiert eine Antwort (fragt relevanten index ab => generiert antwort|
-| `streamlit_app.py`  | frontend in streamlit mit passwortlogik und Benutzer UI |
-| `data/`             | enthält die json-Datenquelle, bei formatabweichung diese Logik dem programm anpassen! |
-| `faiss_index/`      | persistente Vektordatenbank (wird automatisch erstellt mit create_database.py), muss nach änderung der datensatzes neu gestartet werden |
-| `.env.example`      | Vorlage für .env |
-
-
-
-
-
-## Beispielausgabe
-
----
-![beispielausgabe](img/todbeispiel.gif)
+| Passwort | Rolle / Index  |
+|----------|----------------|
+| `azubi123`   | Azubis‑Index |
+| `student456` | Studenten‑Index |
+| `admin789`   | Admin‑Editor   |
 
 ---
 
-## Anpassung des Confidence Scores
+## Konfigurationen
 
-Um die Relevanz einer Antwort zu bewerten, wird ein sogenannter Confidence Score verwendet. 
-
-Dieser Wert liegt zwischen `0` und `1` und gibt an, wie sicher das System ist, dass der zurückgegebene Kontext zur gestellten Frage passt.
-
-### Snippet zur Anpassung
-
-In der Datei `query_data.py` (bzw. wo die `run_query()`funktion also liegt), kann der Confidence Score angepasst werden. Die Standardgrenze für die ich mich entschieden habe liegt bei `0.5`.
+### Confidence‑Schwelle  
+In `query_data.py`:
 
 ```python
 if not results or results[0][1] < 0.5:
-    return "KEINE PASSENDEN ERGEBNISSE GEFUNDEN. Bitte versuche es mit einer anderen Frage."
+    return "KEINE PASSENDEN ERGEBNISSE …"
 ```
 
-Durch Erhöhung oder Senkung dieser Grenze bzw. dieses Wertes lässt sich das Antwortverhalten feinjustieren:
+* Je niedriger der Wert, desto „kulantes“ Matching  
+* Höhere Werte = weniger, dafür präzisere Antworten  
 
----
-
-### Visualisierung der Auswirkungen
-
-Die folgenden Diagramme zeigen, wie sich unterschiedliche Scores auf die Erkennung von passenden Antworten auswirken:
-
-#### Nicht passende Antworten (Incorrect Responses)
-Antworten mit Score < 0.5, obwohl sie keine wirkliche Verbindung zur Frage haben:
-
+### Temperature  
 ```python
-if not results or results[0][1] < 0.29:
+ChatOpenAI(model=model_name, temperature=0)
 ```
-
-![Incorrect Responses](img/incorrect.png)
-
-
-
-#### Passende Antworten (Correct Responses)
-Hohe Scores (ab 0.7) – hier besteht starke Übereinstimmung zwischen Frage und gefundenem Kontext:
-
-```python
-if not results or results[0][1] < 0.86:
-```
-
-![Correct Responses](img/correct.png)
-
-
----
-
-Je nach Use Case (präzision oder kulanz) ist dieser Wert frei anpassbar!
-
----
-
-## Temperature-Wert
-
-Die Modellantwort wird in `query_data.py` wie folgt erzeugt:
-```python
-model = ChatOpenAI(model=selected_model, temperature=0)
-```
-
-### Wirkung des Temperature-Werts
-| Einstellung        | Wirkung                                                                 |
-|--------------------|-------------------------------------------------------------------------|
-| `temperature = 0`  | Antwort ist konstant, vorhersehbar, sachlich                             |
-| `temperature = 1`  | Antwort ist kreativ, ausschweifend, potenziell ungenau (Halluzination) |
-
-Die Einstellung ist bei diesem FAQ-System ist sinnvoll, da gleiche Fragen auch gleiche Antworten liefern sollen.
+* `0` = deterministisch  
+* `>0.5` = kreativer (empfiehlt sich bei FAQ **nicht**)
 
 ### Prompt: Charakter des Bots
 Der verwendete Prompt bestimmt Ton, Sprachebene und Verhalten des Bots. 
@@ -174,37 +133,47 @@ Der Prompt beeinflusst:
 
 ---
 
+## Admin‑Editor
 
-## Skalierung auf andere Use Cases
+* **Leeres Template**: generiert X leere QA‑Zeilen als Download‑Datei  
+* **JSON‑Import**: bestehende Events laden  
+* **Live‑Tabellen‑Editor**: Zeilen hinzufügen, löschen, sortieren  
+* **LLM‑Validierung**: prüft Verständlichkeit, Redundanz & Korrektheit
 
-Diese Demo lässt sich leicht auf andere use cases übertragen:
+> **Ansicht des Admin Panels**
 
-**Beispielhafte Use Cases:**
-- internes IT-Wissenssystem (jira knowledge base)
-- Infrastructure Inventory Assistant
-- Mitarbeiter-Onboarding FAQ
-- Schulungssystem für verschiedene Abteilungen
 
-**Anpassungsschritte:**
+![Admin Demo](img/admin_panel.gif)
 
-1. **Prompt anpassen:**  
-   In `query_data.py` oder `PROMPT_TEMPLATES` einen neuen Prompt für die Zielgruppe hinterlegen (z. B. "Du bist ein KI-Assistent für Systemadministratoren, etc...").
+> **Beispielhafte Eingabe im Admin-Editor**
 
-2. **Neue JSON-Datei:**  
-   Struktur: `{"qa_pairs": [{"Fragen": ..., "Antworten": ...}]}`
+![Admin ausgabe](img/ausgabe_admin.png)
 
-3. **Datenbank-Erstellung:**  
-   `create_database.py` um neue Gruppe ergänzen im faiss index(z. B. "infra": "data/infra_qa.json")
+ 
 
-4. **Frontend erweitern:**  
-   In `streamlit_app.py` ein weiteres Passwort zur Gruppen id (access_mapping) hinzufügen.
+---
 
-5. **Index-Auswahl:**  
-   Gruppenspezifisch den richtigen faiss index laden
+## Anpassung an andere Fachbereiche
+
+1. Neue JSON mit passenden QA‑Pairs bereitstellen  
+2. `access_mapping` & Passwörter ergänzen  
+3. Prompt in `PROMPT_TEMPLATES` an Zielgruppe anpassen  
+4. Index via `create_database.py` neu generieren  
+
+---
+
+## Beispielausgabe
+
+---
+![beispielausgabe](img/todbeispiel.gif)
 
 ---
 
 
 
+
+
 ## Autor
-Enes Avsar
+
+Enes Avsar 
+
