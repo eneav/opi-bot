@@ -7,7 +7,7 @@
 **opi‑bot** ist ein internes FAQ‑System auf Basis von Retrieval‑Augmented Generation (RAG).  
 Alle Fragen‑ und Antwortpaare werden lokal als Vektoren in einer FAISS‑Datenbank gespeichert. Ein OpenAI‑Modell (Standard: **gpt‑4‑0125‑preview**) erzeugt daraufhin fundierte Antworten – ausschließlich aus dem gefundenen Kontext.
 
-# Inhaltsverzeichnis
+# Inhalt
 
 - [Funktionsweise & Architektur](#funktionsweise--architektur)
 - [Projektstruktur](#projektstruktur)
@@ -15,7 +15,8 @@ Alle Fragen‑ und Antwortpaare werden lokal als Vektoren in einer FAISS‑Daten
 - [Datenbank erstellen](#datenbank-erstellen)
 - [Start der Anwendung](#start-der-anwendung)
 - [Konfigurationen](#konfigurationen)
-- [Admin-Editor](#7-admin-editor)
+- [Admin-Panel](#admin-panel)
+
 - [Anpassung an andere Fachbereiche](#8-anpassung-an-andere-fachbereiche)
 - [Beispielausgabe](#beispielausgabe)
 
@@ -133,7 +134,7 @@ Der Prompt beeinflusst:
 
 ---
 
-## Admin‑Editor
+## Admin Panel
 
 * **Leeres Template**: generiert X leere QA‑Zeilen als Download‑Datei  
 * **JSON‑Import**: bestehende Events laden  
